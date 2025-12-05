@@ -98,41 +98,49 @@ export default function StackPage() {
   const { items, maxSize, lastAction, size, isEmpty } = useStackStore();
 
   return (
-    <div className="container max-w-7xl py-8 px-6 space-y-6">
+    <div className="container max-w-7xl py-4 md:py-8 px-4 md:px-6 space-y-4 md:space-y-6">
       {/* Header */}
       <div>
-        <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-3xl font-bold">스택 (Stack)</h1>
-          <Badge variant="secondary">LIFO</Badge>
+        <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-2">
+          <h1 className="text-2xl md:text-3xl font-bold">스택 (Stack)</h1>
+          <Badge variant="secondary" className="text-xs md:text-sm">LIFO</Badge>
         </div>
-        <p className="text-muted-foreground">
+        <p className="text-sm md:text-base text-muted-foreground">
           Last In First Out 원리로 동작하는 선형 자료구조를 시각화합니다.
         </p>
       </div>
 
       {/* Information Panel */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              현재 크기
-            </CardTitle>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+        <Card className="relative overflow-hidden border-2 border-indigo-200/50 bg-gradient-to-br from-indigo-50 via-white to-blue-50">
+          <div className="absolute top-0 right-0 w-20 h-20 bg-indigo-200/30 rounded-full blur-2xl" />
+          <CardHeader className="pb-2 md:pb-3 relative">
+            <div className="flex items-center gap-1 md:gap-2">
+              <span className="text-xl md:text-2xl">📊</span>
+              <CardTitle className="text-xs md:text-sm font-medium text-indigo-600">
+                현재 크기
+              </CardTitle>
+            </div>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {size()} <span className="text-muted-foreground text-base">/ {maxSize}</span>
+          <CardContent className="relative">
+            <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
+              {size()} <span className="text-muted-foreground text-base md:text-lg">/ {maxSize}</span>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Top 요소
-            </CardTitle>
+        <Card className="relative overflow-hidden border-2 border-purple-200/50 bg-gradient-to-br from-purple-50 via-white to-indigo-50">
+          <div className="absolute top-0 right-0 w-20 h-20 bg-purple-200/30 rounded-full blur-2xl" />
+          <CardHeader className="pb-2 md:pb-3 relative">
+            <div className="flex items-center gap-1 md:gap-2">
+              <span className="text-xl md:text-2xl">🔝</span>
+              <CardTitle className="text-xs md:text-sm font-medium text-purple-600">
+                Top 요소
+              </CardTitle>
+            </div>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
+          <CardContent className="relative">
+            <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
               {isEmpty() ? (
                 <span className="text-muted-foreground">-</span>
               ) : (
@@ -142,36 +150,47 @@ export default function StackPage() {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              상태
-            </CardTitle>
+        <Card className="relative overflow-hidden border-2 border-blue-200/50 bg-gradient-to-br from-blue-50 via-white to-cyan-50">
+          <div className="absolute top-0 right-0 w-20 h-20 bg-blue-200/30 rounded-full blur-2xl" />
+          <CardHeader className="pb-2 md:pb-3 relative">
+            <div className="flex items-center gap-1 md:gap-2">
+              <span className="text-xl md:text-2xl">
+                {isEmpty() ? "😴" : size() === maxSize ? "🔥" : "✨"}
+              </span>
+              <CardTitle className="text-xs md:text-sm font-medium text-blue-600">
+                상태
+              </CardTitle>
+            </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="relative">
             <Badge
-              variant={
+              className={`text-sm md:text-base px-3 md:px-4 py-1 md:py-1.5 rounded-full border-0 ${
                 isEmpty()
-                  ? "secondary"
+                  ? "bg-gradient-to-r from-gray-300 to-gray-400"
                   : size() === maxSize
-                  ? "destructive"
-                  : "default"
-              }
-              className="text-base px-3 py-1"
+                  ? "bg-gradient-to-r from-pink-400 to-red-400"
+                  : "bg-gradient-to-r from-green-300 to-emerald-400"
+              } text-white shadow-lg`}
             >
               {isEmpty() ? "Empty" : size() === maxSize ? "Full" : "Available"}
             </Badge>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              시간 복잡도
-            </CardTitle>
+        <Card className="relative overflow-hidden border-2 border-indigo-200/50 bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+          <div className="absolute top-0 right-0 w-20 h-20 bg-indigo-200/30 rounded-full blur-2xl" />
+          <CardHeader className="pb-2 md:pb-3 relative">
+            <div className="flex items-center gap-1 md:gap-2">
+              <span className="text-xl md:text-2xl">⚡</span>
+              <CardTitle className="text-xs md:text-sm font-medium text-indigo-600">
+                시간 복잡도
+              </CardTitle>
+            </div>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-primary">O(1)</div>
+          <CardContent className="relative">
+            <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              O(1)
+            </div>
             <p className="text-xs text-muted-foreground mt-1">
               Push, Pop, Peek
             </p>
@@ -180,13 +199,13 @@ export default function StackPage() {
       </div>
 
       {/* Main Visualization Area */}
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-4 md:gap-6">
         {/* Visualizer Section */}
-        <div className="lg:col-span-2 space-y-4">
+        <div className="lg:col-span-2 space-y-3 md:space-y-4">
           <Card className="shadow-md">
             <CardHeader>
-              <CardTitle>시각화</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-lg md:text-xl">시각화</CardTitle>
+              <CardDescription className="text-xs md:text-sm">
                 스택의 동작을 실시간으로 확인하세요
               </CardDescription>
             </CardHeader>
@@ -198,14 +217,14 @@ export default function StackPage() {
           {/* Action Feedback Panel */}
           {lastAction && (
             <Card className="border-primary/50 bg-primary/5">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm flex items-center gap-2">
+              <CardHeader className="pb-2 md:pb-3">
+                <CardTitle className="text-xs md:text-sm flex items-center gap-2">
                   <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
                   마지막 연산
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm">{lastAction}</p>
+                <p className="text-xs md:text-sm">{lastAction}</p>
               </CardContent>
             </Card>
           )}
@@ -218,10 +237,11 @@ export default function StackPage() {
       </div>
 
       {/* Fun Educational Content */}
-      <div className="grid lg:grid-cols-2 gap-6">
-        <Card className="border-2 border-pink-200 bg-gradient-to-br from-pink-50 to-purple-50">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+      <div className="grid lg:grid-cols-2 gap-4 md:gap-6">
+        <Card className="border-2 border-indigo-200 bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-300/20 rounded-full blur-3xl" />
+          <CardHeader className="relative">
+            <CardTitle className="flex items-center gap-2 text-xl">
               🎯 스택이 뭐예요?
             </CardTitle>
           </CardHeader>
@@ -292,9 +312,10 @@ export default function StackPage() {
           </CardContent>
         </Card>
 
-        <Card className="border-2 border-purple-200 bg-gradient-to-br from-purple-50 to-blue-50">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+        <Card className="border-2 border-purple-200 bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 relative overflow-hidden">
+          <div className="absolute bottom-0 left-0 w-32 h-32 bg-purple-300/20 rounded-full blur-3xl" />
+          <CardHeader className="relative">
+            <CardTitle className="flex items-center gap-2 text-xl">
               ⚡ 뭘 할 수 있나요?
             </CardTitle>
           </CardHeader>
@@ -348,9 +369,10 @@ export default function StackPage() {
       </div>
 
       {/* Fun Tips */}
-      <Card className="border-2 border-yellow-200 bg-gradient-to-r from-yellow-50 to-orange-50">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+      <Card className="border-2 border-cyan-200 bg-gradient-to-r from-cyan-50 via-blue-50 to-indigo-50 relative overflow-hidden">
+        <div className="absolute top-0 left-1/2 w-40 h-40 bg-blue-300/20 rounded-full blur-3xl" />
+        <CardHeader className="relative">
+          <CardTitle className="flex items-center gap-2 text-xl">
             💭 재미있는 팁!
           </CardTitle>
         </CardHeader>

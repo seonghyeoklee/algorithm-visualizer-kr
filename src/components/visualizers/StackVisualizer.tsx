@@ -10,25 +10,25 @@ export function StackVisualizer() {
   const maxSize = useStackStore((state) => state.maxSize);
 
   const pastelColors = [
-    "linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 100%)", // 핑크
-    "linear-gradient(135deg, #E0BBE4 0%, #D8BFD8 100%)", // 라벤더
-    "linear-gradient(135deg, #B0E0E6 0%, #98D8C8 100%)", // 민트
-    "linear-gradient(135deg, #FFDAB9 0%, #FFE4B5 100%)", // 복숭아
-    "linear-gradient(135deg, #F0E68C 0%, #FFFACD 100%)", // 레몬
+    "linear-gradient(135deg, #E0E7FF 0%, #C7D2FE 100%)", // 라벤더
+    "linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%)", // 스카이블루
+    "linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%)", // 시안
+    "linear-gradient(135deg, #DDD6FE 0%, #C4B5FD 100%)", // 퍼플
+    "linear-gradient(135deg, #E0E7FF 0%, #A5B4FC 100%)", // 인디고
   ];
 
   return (
-    <div className="flex flex-col items-center justify-end h-full min-h-[500px] p-8 bg-gradient-to-b from-pink-50/30 via-purple-50/20 to-blue-50/30 rounded-2xl relative overflow-hidden">
+    <div className="flex flex-col items-center justify-end h-full min-h-[400px] md:min-h-[500px] p-4 md:p-8 bg-gradient-to-b from-indigo-50/30 via-purple-50/20 to-blue-50/30 rounded-2xl relative overflow-hidden">
       {/* Decorative background elements */}
-      <div className="absolute top-4 right-4 text-pink-200 opacity-50">
+      <div className="absolute top-4 right-4 text-indigo-200 opacity-50">
         <Sparkles className="w-6 h-6 animate-pulse" />
       </div>
-      <div className="absolute bottom-4 left-4 text-purple-200 opacity-50">
+      <div className="absolute bottom-4 left-4 text-blue-200 opacity-50">
         <Sparkles className="w-5 h-5 animate-pulse" style={{ animationDelay: "0.5s" }} />
       </div>
 
       {/* Stack Container */}
-      <div className="relative flex flex-col-reverse items-center gap-2 w-44">
+      <div className="relative flex flex-col-reverse items-center gap-1.5 md:gap-2 w-36 md:w-44">
         <AnimatePresence mode="popLayout">
           {items.map((item, index) => {
             const isTop = index === items.length - 1;
@@ -71,15 +71,15 @@ export function StackVisualizer() {
                   rotate: [0, -2, 2, 0],
                   transition: { duration: 0.3 }
                 }}
-                className="relative w-44 h-24 rounded-2xl flex items-center justify-center font-bold text-4xl group cursor-pointer"
+                className="relative w-36 md:w-44 h-20 md:h-24 rounded-xl md:rounded-2xl flex items-center justify-center font-bold text-3xl md:text-4xl group cursor-pointer"
                 style={{
                   background: item.isAnimating
                     ? "linear-gradient(135deg, #10b981 0%, #34d399 100%)"
                     : pastelColors[colorIndex],
                   boxShadow: isTop
-                    ? "0 8px 32px -8px rgba(255, 182, 193, 0.6), 0 0 0 3px rgba(255, 255, 255, 0.8), inset 0 2px 8px rgba(255, 255, 255, 0.5)"
+                    ? "0 8px 32px -8px rgba(129, 140, 248, 0.6), 0 0 0 3px rgba(255, 255, 255, 0.8), inset 0 2px 8px rgba(255, 255, 255, 0.5)"
                     : "0 4px 16px -4px rgba(0, 0, 0, 0.15), 0 0 0 2px rgba(255, 255, 255, 0.6), inset 0 2px 8px rgba(255, 255, 255, 0.4)",
-                  color: "#5a4a7a",
+                  color: "#4338ca",
                 }}
               >
                 {/* Cute shine effect */}
@@ -106,7 +106,7 @@ export function StackVisualizer() {
                         rotate: { duration: 3, repeat: Infinity, ease: "linear" },
                         scale: { duration: 1, repeat: Infinity }
                       }}
-                      className="absolute -top-2 -right-2 text-pink-400"
+                      className="absolute -top-2 -right-2 text-indigo-400"
                     >
                       <Sparkles className="w-6 h-6" />
                     </motion.div>
@@ -121,10 +121,10 @@ export function StackVisualizer() {
                       transition={{
                         y: { duration: 1.5, repeat: Infinity }
                       }}
-                      className="absolute -right-28 flex items-center gap-2"
+                      className="absolute -right-20 md:-right-28 flex items-center gap-2"
                     >
                       <Badge
-                        className="shadow-lg bg-gradient-to-r from-pink-400 to-purple-400 text-white border-0 text-sm px-3 py-1 rounded-full"
+                        className="shadow-lg bg-gradient-to-r from-indigo-400 to-blue-400 text-white border-0 text-xs md:text-sm px-2 md:px-3 py-0.5 md:py-1 rounded-full"
                       >
                         ✨ Top
                       </Badge>
@@ -179,39 +179,39 @@ export function StackVisualizer() {
             transition={{
               y: { duration: 2, repeat: Infinity }
             }}
-            className="w-44 h-24 border-4 border-dashed border-pink-200 rounded-2xl flex flex-col items-center justify-center text-muted-foreground backdrop-blur-sm bg-white/50"
+            className="w-36 md:w-44 h-20 md:h-24 border-4 border-dashed border-indigo-200 rounded-xl md:rounded-2xl flex flex-col items-center justify-center text-muted-foreground backdrop-blur-sm bg-white/50"
           >
-            <span className="text-3xl mb-1">📦</span>
-            <span className="text-sm font-medium">비어있어요!</span>
+            <span className="text-2xl md:text-3xl mb-1">📦</span>
+            <span className="text-xs md:text-sm font-medium">비어있어요!</span>
           </motion.div>
         )}
       </div>
 
       {/* Cute Platform */}
       <motion.div
-        className="relative mt-8 w-52 h-3 bg-gradient-to-r from-pink-200 via-purple-200 to-blue-200 rounded-full"
+        className="relative mt-6 md:mt-8 w-44 md:w-52 h-2.5 md:h-3 bg-gradient-to-r from-indigo-200 via-purple-200 to-blue-200 rounded-full"
         animate={{
           boxShadow: [
-            "0 0 20px rgba(255, 182, 193, 0.3)",
-            "0 0 30px rgba(216, 191, 216, 0.5)",
-            "0 0 20px rgba(255, 182, 193, 0.3)",
+            "0 0 20px rgba(129, 140, 248, 0.3)",
+            "0 0 30px rgba(167, 139, 250, 0.5)",
+            "0 0 20px rgba(129, 140, 248, 0.3)",
           ]
         }}
         transition={{ duration: 2, repeat: Infinity }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-pink-300/20 via-purple-300/20 to-blue-300/20 blur-xl rounded-full" />
+        <div className="absolute inset-0 bg-gradient-to-r from-indigo-300/20 via-purple-300/20 to-blue-300/20 blur-xl rounded-full" />
       </motion.div>
 
       {/* Cute Stats */}
-      <div className="mt-8 flex gap-3">
-        <Badge variant="outline" className="text-sm px-4 py-2 rounded-full bg-white/80 border-pink-200">
+      <div className="mt-6 md:mt-8 flex gap-2 md:gap-3">
+        <Badge variant="outline" className="text-xs md:text-sm px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/80 border-indigo-200">
           <span className="text-muted-foreground mr-1">📊</span>
           <span className="font-bold text-foreground">
             {items.length} / {maxSize}
           </span>
         </Badge>
         <Badge
-          className={`text-sm px-4 py-2 rounded-full border-0 ${
+          className={`text-xs md:text-sm px-3 md:px-4 py-1.5 md:py-2 rounded-full border-0 ${
             items.length === 0
               ? "bg-gradient-to-r from-gray-300 to-gray-400"
               : items.length === maxSize
