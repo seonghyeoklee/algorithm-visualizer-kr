@@ -12,6 +12,7 @@ import {
   Binary
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const dataStructures = [
   {
@@ -40,14 +41,17 @@ export function Sidebar() {
       <div className="flex h-full flex-col">
         {/* Header */}
         <div className="p-6">
-          <Link href="/">
-            <h1 className="text-xl font-bold tracking-tight">
-              자료구조 시각화
-            </h1>
-            <p className="text-sm text-muted-foreground mt-1">
-              Interactive Learning
-            </p>
-          </Link>
+          <div className="flex items-start justify-between">
+            <Link href="/">
+              <h1 className="text-xl font-bold tracking-tight">
+                자료구조 시각화
+              </h1>
+              <p className="text-sm text-muted-foreground mt-1">
+                Interactive Learning
+              </p>
+            </Link>
+            <ThemeToggle />
+          </div>
         </div>
 
         <Separator />
