@@ -34,7 +34,7 @@ export default function Home() {
     <div className="w-full">
       {/* Hero Section */}
       <section className="w-full flex justify-center px-4 md:px-8 py-16 md:py-24 lg:py-32">
-        <div className="w-full max-w-6xl text-center space-y-8">
+        <div className="max-w-6xl text-center space-y-8">
           <Badge className="bg-gradient-to-r from-indigo-500 to-blue-500 text-white border-0 px-4 py-1.5 text-sm">
             <Sparkles className="w-3.5 h-3.5 inline mr-1.5" />
             자료구조를 가장 쉽게 배우는 방법
@@ -95,7 +95,7 @@ export default function Home() {
 
       {/* Features Section */}
       <section className="w-full flex justify-center px-4 md:px-8 py-16 md:py-24 bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50">
-        <div className="w-full max-w-6xl">
+        <div className="max-w-6xl">
           <div className="text-center mb-12 md:mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               왜 <span className="bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">StructLab</span>인가요?
@@ -130,7 +130,7 @@ export default function Home() {
 
       {/* Benefits Section */}
       <section className="w-full flex justify-center px-4 md:px-8 py-16 md:py-24">
-        <div className="w-full max-w-6xl">
+        <div className="max-w-6xl">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <h2 className="text-3xl md:text-4xl font-bold">
@@ -191,7 +191,7 @@ export default function Home() {
 
       {/* CTA Section */}
       <section className="w-full flex justify-center px-4 md:px-8 py-16 md:py-24 bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600">
-        <div className="w-full max-w-4xl text-center space-y-8">
+        <div className="max-w-4xl text-center space-y-8">
           <h2 className="text-3xl md:text-5xl font-bold text-white">
             지금 바로 시작하세요
           </h2>
@@ -211,7 +211,7 @@ export default function Home() {
 
       {/* Footer Note */}
       <section className="w-full flex justify-center px-4 md:px-8 py-12 bg-gray-50">
-        <div className="w-full max-w-6xl text-center">
+        <div className="max-w-6xl text-center">
           <p className="text-sm text-gray-500">
             Queue, Linked List, Tree 등 더 많은 자료구조가 곧 추가됩니다
           </p>
