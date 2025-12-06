@@ -3,18 +3,305 @@
 import Link from "next/link";
 import { StackVisualizer } from "@/components/visualizers/StackVisualizer";
 import { StackControls } from "@/components/controls/StackControls";
-import { CodePanel } from "@/components/CodePanel";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useStackStore } from "@/lib/stores/stackStore";
 import { Badge } from "@/components/ui/badge";
-import { ChevronRight, Home } from "lucide-react";
+import { ArrowLeft, Lightbulb, Zap, Code2 } from "lucide-react";
+import { motion } from "framer-motion";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const javascriptCode = `class Stack {
+export default function StackPage() {
+  const { items, maxSize, lastAction, size, isEmpty } = useStackStore();
+
+  return (
+    <div className="w-full min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50">
+      {/* Hero Section */}
+      <section className="px-6 md:px-12 py-12 md:py-16">
+        <div className="max-w-6xl mx-auto">
+          {/* Breadcrumb */}
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-indigo-600 transition-colors mb-8"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            홈으로 돌아가기
+          </Link>
+
+          {/* Title */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center space-y-4 mb-12"
+          >
+            <Badge className="bg-gradient-to-r from-indigo-500 to-blue-500 text-white border-0 px-4 py-1.5">
+              LIFO - Last In, First Out
+            </Badge>
+            <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 bg-clip-text text-transparent">
+              스택 (Stack)
+            </h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              접시를 쌓듯이, 마지막에 넣은 것이 먼저 나오는 자료구조
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Main Interactive Section */}
+      <section className="px-6 md:px-12 pb-12">
+        <div className="max-w-6xl mx-auto">
+          <Tabs defaultValue="visualize" className="space-y-8">
+            <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3 bg-white/80 backdrop-blur-xl border border-indigo-100 p-1.5 rounded-2xl">
+              <TabsTrigger
+                value="visualize"
+                className="rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-600 data-[state=active]:to-blue-600 data-[state=active]:text-white"
+              >
+                <Zap className="w-4 h-4 mr-2" />
+                체험하기
+              </TabsTrigger>
+              <TabsTrigger
+                value="learn"
+                className="rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-600 data-[state=active]:to-blue-600 data-[state=active]:text-white"
+              >
+                <Lightbulb className="w-4 h-4 mr-2" />
+                원리 이해
+              </TabsTrigger>
+              <TabsTrigger
+                value="code"
+                className="rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-600 data-[state=active]:to-blue-600 data-[state=active]:text-white"
+              >
+                <Code2 className="w-4 h-4 mr-2" />
+                코드 보기
+              </TabsTrigger>
+            </TabsList>
+
+            {/* Tab 1: Interactive Visualization */}
+            <TabsContent value="visualize" className="space-y-8">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <Card className="border-2 border-indigo-100 bg-white/80 backdrop-blur-xl shadow-2xl">
+                  <CardHeader className="text-center">
+                    <CardTitle className="text-2xl">
+                      직접 조작하며 배워보세요
+                    </CardTitle>
+                    <p className="text-sm text-gray-600 mt-2">
+                      Push, Pop, Peek 버튼을 눌러 스택이 어떻게 동작하는지 확인하세요
+                    </p>
+                  </CardHeader>
+                  <CardContent className="space-y-8">
+                    {/* Controls */}
+                    <div className="flex justify-center">
+                      <StackControls />
+                    </div>
+
+                    {/* Visualizer */}
+                    <div className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-2xl p-8 min-h-[400px] flex items-center justify-center border border-indigo-100">
+                      <StackVisualizer />
+                    </div>
+
+                    {/* Status Info */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      <Card className="bg-gradient-to-br from-indigo-50 to-blue-50 border-indigo-100">
+                        <CardHeader className="pb-3">
+                          <CardTitle className="text-sm text-indigo-600">현재 크기</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
+                            {size()} / {maxSize}
+                          </p>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="bg-gradient-to-br from-purple-50 to-indigo-50 border-purple-100">
+                        <CardHeader className="pb-3">
+                          <CardTitle className="text-sm text-purple-600">Top 요소</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                            {isEmpty() ? "-" : items[items.length - 1]?.value}
+                          </p>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-100">
+                        <CardHeader className="pb-3">
+                          <CardTitle className="text-sm text-blue-600">상태</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-2xl font-bold text-blue-600">
+                            {isEmpty() ? "비어있음" : "데이터 있음"}
+                          </p>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="bg-gradient-to-br from-cyan-50 to-blue-50 border-cyan-100">
+                        <CardHeader className="pb-3">
+                          <CardTitle className="text-sm text-cyan-600">마지막 동작</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-xl font-bold text-cyan-600">
+                            {lastAction || "없음"}
+                          </p>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </TabsContent>
+
+            {/* Tab 2: Learn Principles */}
+            <TabsContent value="learn" className="space-y-8">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="grid md:grid-cols-2 gap-8"
+              >
+                {/* LIFO Principle */}
+                <Card className="border-2 border-indigo-100 bg-white/80 backdrop-blur-xl">
+                  <CardHeader>
+                    <div className="w-14 h-14 bg-gradient-to-br from-indigo-500 to-blue-500 rounded-2xl flex items-center justify-center mb-4">
+                      <span className="text-3xl">📚</span>
+                    </div>
+                    <CardTitle className="text-2xl">LIFO 원리</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <p className="text-gray-700 leading-relaxed">
+                      <strong className="text-indigo-600">Last In, First Out</strong>
+                      <br />
+                      가장 나중에 들어온 것이 가장 먼저 나간다는 뜻입니다.
+                    </p>
+                    <div className="bg-indigo-50 rounded-xl p-4 space-y-2">
+                      <p className="text-sm font-semibold text-indigo-900">예시:</p>
+                      <p className="text-sm text-indigo-700">
+                        1. 첫 번째 접시를 쌓음 → 맨 아래<br />
+                        2. 두 번째 접시를 쌓음 → 중간<br />
+                        3. 세 번째 접시를 쌓음 → 맨 위<br />
+                        <br />
+                        접시를 빼낼 때는?<br />
+                        → 맨 위(세 번째)부터 꺼냅니다!
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Operations */}
+                <Card className="border-2 border-purple-100 bg-white/80 backdrop-blur-xl">
+                  <CardHeader>
+                    <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-2xl flex items-center justify-center mb-4">
+                      <span className="text-3xl">⚡</span>
+                    </div>
+                    <CardTitle className="text-2xl">주요 연산</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-3">
+                      <div className="bg-purple-50 rounded-xl p-4">
+                        <h4 className="font-bold text-purple-900 mb-1">Push (넣기)</h4>
+                        <p className="text-sm text-purple-700">
+                          스택의 맨 위에 새로운 요소를 추가합니다.
+                          <br />
+                          <code className="text-xs bg-purple-100 px-2 py-1 rounded mt-2 inline-block">
+                            시간복잡도: O(1)
+                          </code>
+                        </p>
+                      </div>
+
+                      <div className="bg-indigo-50 rounded-xl p-4">
+                        <h4 className="font-bold text-indigo-900 mb-1">Pop (빼기)</h4>
+                        <p className="text-sm text-indigo-700">
+                          스택의 맨 위 요소를 제거하고 반환합니다.
+                          <br />
+                          <code className="text-xs bg-indigo-100 px-2 py-1 rounded mt-2 inline-block">
+                            시간복잡도: O(1)
+                          </code>
+                        </p>
+                      </div>
+
+                      <div className="bg-blue-50 rounded-xl p-4">
+                        <h4 className="font-bold text-blue-900 mb-1">Peek (확인)</h4>
+                        <p className="text-sm text-blue-700">
+                          맨 위 요소를 제거하지 않고 값만 확인합니다.
+                          <br />
+                          <code className="text-xs bg-blue-100 px-2 py-1 rounded mt-2 inline-block">
+                            시간복잡도: O(1)
+                          </code>
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Real World Examples */}
+                <Card className="border-2 border-blue-100 bg-white/80 backdrop-blur-xl md:col-span-2">
+                  <CardHeader>
+                    <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mb-4">
+                      <span className="text-3xl">🌍</span>
+                    </div>
+                    <CardTitle className="text-2xl">실생활 예시</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid md:grid-cols-3 gap-4">
+                      {[
+                        {
+                          emoji: "🍽️",
+                          title: "접시 쌓기",
+                          desc: "식당에서 깨끗한 접시를 쌓아두고, 맨 위부터 사용하는 것"
+                        },
+                        {
+                          emoji: "📚",
+                          title: "책 더미",
+                          desc: "책을 쌓아두고 위에서부터 하나씩 꺼내서 읽는 것"
+                        },
+                        {
+                          emoji: "⬅️",
+                          title: "뒤로 가기",
+                          desc: "브라우저에서 가장 최근 페이지부터 뒤로 가는 것"
+                        }
+                      ].map((example, idx) => (
+                        <motion.div
+                          key={idx}
+                          whileHover={{ scale: 1.05, rotate: [0, -2, 2, 0] }}
+                          className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-6 text-center cursor-pointer"
+                        >
+                          <div className="text-5xl mb-3">{example.emoji}</div>
+                          <h4 className="font-bold text-blue-900 mb-2">{example.title}</h4>
+                          <p className="text-sm text-blue-700">{example.desc}</p>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </TabsContent>
+
+            {/* Tab 3: Code Example */}
+            <TabsContent value="code" className="space-y-8">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <Card className="border-2 border-indigo-100 bg-white/80 backdrop-blur-xl">
+                  <CardHeader>
+                    <CardTitle className="text-2xl">JavaScript 구현</CardTitle>
+                    <p className="text-sm text-gray-600 mt-2">
+                      스택을 JavaScript 클래스로 구현한 예제입니다
+                    </p>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="bg-gray-900 rounded-xl p-6 overflow-x-auto">
+                      <pre className="text-sm text-gray-100 font-mono">
+                        <code>{`class Stack {
   constructor() {
     this.items = [];
     this.maxSize = 10;
   }
 
+  // Push: 요소 추가
   push(value) {
     if (this.items.length >= this.maxSize) {
       throw new Error("Stack Overflow");
@@ -22,6 +309,7 @@ const javascriptCode = `class Stack {
     this.items.push(value);
   }
 
+  // Pop: 요소 제거 및 반환
   pop() {
     if (this.isEmpty()) {
       throw new Error("Stack Underflow");
@@ -29,6 +317,7 @@ const javascriptCode = `class Stack {
     return this.items.pop();
   }
 
+  // Peek: 맨 위 요소 확인
   peek() {
     if (this.isEmpty()) {
       return undefined;
@@ -36,14 +325,17 @@ const javascriptCode = `class Stack {
     return this.items[this.items.length - 1];
   }
 
+  // 스택이 비어있는지 확인
   isEmpty() {
     return this.items.length === 0;
   }
 
+  // 현재 크기 반환
   size() {
     return this.items.length;
   }
 
+  // 모든 요소 제거
   clear() {
     this.items = [];
   }
@@ -51,483 +343,59 @@ const javascriptCode = `class Stack {
 
 // 사용 예시
 const stack = new Stack();
-stack.push(10);
-stack.push(20);
-stack.push(30);
-console.log(stack.peek()); // 30
-console.log(stack.pop());  // 30
-console.log(stack.size()); // 2`;
+stack.push(1);
+stack.push(2);
+stack.push(3);
+console.log(stack.peek());  // 3
+console.log(stack.pop());   // 3
+console.log(stack.size());  // 2`}</code>
+                      </pre>
+                    </div>
 
-const pythonCode = `class Stack:
-    def __init__(self, max_size=10):
-        self.items = []
-        self.max_size = max_size
-
-    def push(self, value):
-        if len(self.items) >= self.max_size:
-            raise Exception("Stack Overflow")
-        self.items.append(value)
-
-    def pop(self):
-        if self.is_empty():
-            raise Exception("Stack Underflow")
-        return self.items.pop()
-
-    def peek(self):
-        if self.is_empty():
-            return None
-        return self.items[-1]
-
-    def is_empty(self):
-        return len(self.items) == 0
-
-    def size(self):
-        return len(self.items)
-
-    def clear(self):
-        self.items = []
-
-# 사용 예시
-stack = Stack()
-stack.push(10)
-stack.push(20)
-stack.push(30)
-print(stack.peek())  # 30
-print(stack.pop())   # 30
-print(stack.size())  # 2`;
-
-export default function StackPage() {
-  const { items, maxSize, lastAction, size, isEmpty } = useStackStore();
-
-  return (
-    <div className="w-full px-4 md:px-8 py-4 md:py-8">
-      <div className="mx-auto max-w-6xl space-y-6 md:space-y-8">
-      {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-        <Link href="/" className="flex items-center gap-1 hover:text-foreground transition-colors">
-          <Home className="w-4 h-4" />
-          <span>Home</span>
-        </Link>
-        <ChevronRight className="w-4 h-4" />
-        <span className="text-foreground font-medium">Stack</span>
-      </nav>
-
-      {/* Header */}
-      <div className="text-center space-y-3">
-        <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3">
-          <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
-            스택 (Stack)
-          </h1>
-          <Badge className="bg-gradient-to-r from-indigo-400 to-blue-400 text-white border-0 text-xs md:text-sm px-3 py-1">
-            LIFO
-          </Badge>
+                    <div className="mt-6 p-4 bg-indigo-50 rounded-xl">
+                      <p className="text-sm text-indigo-900">
+                        <strong>💡 핵심 포인트:</strong>
+                        <br />
+                        • 배열의 <code className="bg-indigo-100 px-2 py-0.5 rounded">push()</code>와{" "}
+                        <code className="bg-indigo-100 px-2 py-0.5 rounded">pop()</code>을 사용하면 쉽게 구현 가능
+                        <br />
+                        • 모든 연산이 O(1) 시간복잡도
+                        <br />• Overflow(넘침)와 Underflow(빔) 상태를 체크해야 함
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </TabsContent>
+          </Tabs>
         </div>
-        <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-          접시 쌓기처럼 쉽고 재미있는 자료구조! 마지막에 넣은 게 제일 먼저 나와요 🎯
-        </p>
-      </div>
+      </section>
 
-      {/* Step 1: 스택이란? */}
-      <Card className="border-2 border-indigo-200 bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-300/20 rounded-full blur-3xl" />
-        <CardHeader className="relative">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-3xl">📚</span>
-            <CardTitle className="text-xl md:text-2xl">1. 스택이 뭔가요?</CardTitle>
-          </div>
-          <CardDescription className="text-sm md:text-base">
-            일상 생활에서 자주 보는 그것!
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="relative">
-          <div className="grid md:grid-cols-2 gap-4 md:gap-6">
-            <div className="bg-white/70 p-4 md:p-6 rounded-xl space-y-3">
-              <h4 className="font-bold text-lg md:text-xl flex items-center gap-2">
-                🍽️ 접시 쌓기
-              </h4>
-              <p className="text-sm md:text-base leading-relaxed">
-                식당에서 접시를 쌓을 때를 생각해보세요!
-                새 접시는 항상 <strong className="text-indigo-600">맨 위에</strong> 올리고,
-                사용할 때도 <strong className="text-indigo-600">맨 위</strong>부터 빼잖아요?
-                <br/><br/>
-                이게 바로 <strong className="text-purple-600">스택(Stack)</strong>이에요! 🎉
-              </p>
-            </div>
-
-            <div className="bg-white/70 p-4 md:p-6 rounded-xl space-y-3">
-              <div className="flex items-center gap-2 mb-2">
-                <Badge className="bg-gradient-to-r from-pink-400 to-purple-400 text-white border-0">
-                  LIFO
-                </Badge>
-                <h4 className="font-bold text-lg md:text-xl">
-                  마지막이 첫 번째!
-                </h4>
-              </div>
-              <p className="text-sm md:text-base leading-relaxed">
-                <strong className="text-purple-600">Last In, First Out</strong>의 약자예요.
-                <br/>
-                가장 나중에 들어온 것이 가장 먼저 나간다는 뜻이에요!
-              </p>
-              <div className="flex items-center gap-2 flex-wrap mt-4 p-3 bg-indigo-50 rounded-lg">
-                <Badge variant="outline" className="text-sm">3️⃣ 마지막 입장</Badge>
-                <span>→</span>
-                <Badge variant="outline" className="text-sm">2️⃣</Badge>
-                <span>→</span>
-                <Badge variant="outline" className="text-sm">1️⃣ 첫 입장</Badge>
-              </div>
-              <p className="text-xs md:text-sm text-muted-foreground text-center mt-2">
-                나갈 때는 3️⃣ → 2️⃣ → 1️⃣ 순서로!
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Step 2: 직접 해보기 */}
-      <div className="space-y-4">
-        <div className="text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-2 flex items-center justify-center gap-2">
-            <span>🎮</span>
-            2. 직접 해볼까요?
-          </h2>
-          <p className="text-sm md:text-base text-muted-foreground">
-            아래 컨트롤로 스택을 조작하며 LIFO 원리를 체험해보세요!
-          </p>
-        </div>
-
-        {/* 현재 상태 정보 */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-        <Card className="relative overflow-hidden border-2 border-indigo-200/50 bg-gradient-to-br from-indigo-50 via-white to-blue-50">
-          <div className="absolute top-0 right-0 w-20 h-20 bg-indigo-200/30 rounded-full blur-2xl" />
-          <CardHeader className="pb-2 md:pb-3 relative">
-            <div className="flex items-center gap-1 md:gap-2">
-              <span className="text-xl md:text-2xl">📊</span>
-              <CardTitle className="text-xs md:text-sm font-medium text-indigo-600">
-                현재 크기
-              </CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="relative">
-            <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
-              {size()} <span className="text-muted-foreground text-base md:text-lg">/ {maxSize}</span>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="relative overflow-hidden border-2 border-purple-200/50 bg-gradient-to-br from-purple-50 via-white to-indigo-50">
-          <div className="absolute top-0 right-0 w-20 h-20 bg-purple-200/30 rounded-full blur-2xl" />
-          <CardHeader className="pb-2 md:pb-3 relative">
-            <div className="flex items-center gap-1 md:gap-2">
-              <span className="text-xl md:text-2xl">🔝</span>
-              <CardTitle className="text-xs md:text-sm font-medium text-purple-600">
-                Top 요소
-              </CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="relative">
-            <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-              {isEmpty() ? (
-                <span className="text-muted-foreground">-</span>
-              ) : (
-                items[items.length - 1]?.value
-              )}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="relative overflow-hidden border-2 border-blue-200/50 bg-gradient-to-br from-blue-50 via-white to-cyan-50">
-          <div className="absolute top-0 right-0 w-20 h-20 bg-blue-200/30 rounded-full blur-2xl" />
-          <CardHeader className="pb-2 md:pb-3 relative">
-            <div className="flex items-center gap-1 md:gap-2">
-              <span className="text-xl md:text-2xl">
-                {isEmpty() ? "😴" : size() === maxSize ? "🔥" : "✨"}
-              </span>
-              <CardTitle className="text-xs md:text-sm font-medium text-blue-600">
-                상태
-              </CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="relative">
-            <Badge
-              className={`text-sm md:text-base px-3 md:px-4 py-1 md:py-1.5 rounded-full border-0 ${
-                isEmpty()
-                  ? "bg-gradient-to-r from-gray-300 to-gray-400"
-                  : size() === maxSize
-                  ? "bg-gradient-to-r from-pink-400 to-red-400"
-                  : "bg-gradient-to-r from-green-300 to-emerald-400"
-              } text-white shadow-lg`}
+      {/* CTA Section */}
+      <section className="px-6 md:px-12 py-16">
+        <div className="max-w-4xl mx-auto text-center space-y-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="text-3xl font-bold text-gray-900 mb-4">
+              스택의 원리를 이해하셨나요?
+            </h3>
+            <p className="text-lg text-gray-600 mb-8">
+              다른 자료구조도 같은 방식으로 배워보세요
+            </p>
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-indigo-600 to-blue-600 text-white rounded-xl font-semibold hover:shadow-xl transition-all"
             >
-              {isEmpty() ? "Empty" : size() === maxSize ? "Full" : "Available"}
-            </Badge>
-          </CardContent>
-        </Card>
-
-        <Card className="relative overflow-hidden border-2 border-indigo-200/50 bg-gradient-to-br from-indigo-50 via-white to-purple-50">
-          <div className="absolute top-0 right-0 w-20 h-20 bg-indigo-200/30 rounded-full blur-2xl" />
-          <CardHeader className="pb-2 md:pb-3 relative">
-            <div className="flex items-center gap-1 md:gap-2">
-              <span className="text-xl md:text-2xl">⚡</span>
-              <CardTitle className="text-xs md:text-sm font-medium text-indigo-600">
-                시간 복잡도
-              </CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="relative">
-            <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              O(1)
-            </div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Push, Pop, Peek
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-
-        {/* 시각화 영역 */}
-        <div className="grid lg:grid-cols-3 gap-4 md:gap-6">
-        {/* Visualizer Section */}
-        <div className="lg:col-span-2 space-y-3 md:space-y-4">
-          <Card className="shadow-md">
-            <CardHeader>
-              <CardTitle className="text-lg md:text-xl">시각화</CardTitle>
-              <CardDescription className="text-xs md:text-sm">
-                스택의 동작을 실시간으로 확인하세요
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <StackVisualizer />
-            </CardContent>
-          </Card>
-
-          {/* Action Feedback Panel */}
-          {lastAction && (
-            <Card className="border-primary/50 bg-primary/5">
-              <CardHeader className="pb-2 md:pb-3">
-                <CardTitle className="text-xs md:text-sm flex items-center gap-2">
-                  <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                  마지막 연산
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-xs md:text-sm">{lastAction}</p>
-              </CardContent>
-            </Card>
-          )}
+              다른 자료구조 보기
+              <ArrowLeft className="w-5 h-5 rotate-180" />
+            </Link>
+          </motion.div>
         </div>
-
-          {/* Controls Section */}
-          <div className="lg:col-span-1">
-            <StackControls />
-          </div>
-        </div>
-      </div>
-
-      {/* Step 3: 주요 연산 */}
-      <Card className="border-2 border-purple-200 bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 relative overflow-hidden">
-        <div className="absolute bottom-0 left-0 w-40 h-40 bg-purple-300/20 rounded-full blur-3xl" />
-        <CardHeader className="relative">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-3xl">⚡</span>
-            <CardTitle className="text-xl md:text-2xl">3. 스택으로 뭘 할 수 있나요?</CardTitle>
-          </div>
-          <CardDescription className="text-sm md:text-base">
-            스택의 3가지 핵심 연산을 알아봐요
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="relative">
-          <div className="grid md:grid-cols-3 gap-4">
-            {/* Push */}
-            <div className="bg-white/70 p-4 md:p-5 rounded-xl space-y-3">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-3xl md:text-4xl">📥</span>
-                  <h4 className="font-bold text-lg md:text-xl">Push</h4>
-                </div>
-                <Badge variant="default" className="text-xs">O(1)</Badge>
-              </div>
-              <p className="text-sm md:text-base leading-relaxed">
-                새로운 값을 <strong className="text-purple-600">맨 위에 쏙</strong> 넣어요!
-              </p>
-              <div className="bg-purple-50 p-3 rounded-lg text-xs md:text-sm">
-                <code className="text-purple-700">stack.push(10)</code>
-                <p className="text-muted-foreground mt-1">→ 10을 스택 맨 위에 추가</p>
-              </div>
-            </div>
-
-            {/* Pop */}
-            <div className="bg-white/70 p-4 md:p-5 rounded-xl space-y-3">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-3xl md:text-4xl">📤</span>
-                  <h4 className="font-bold text-lg md:text-xl">Pop</h4>
-                </div>
-                <Badge variant="default" className="text-xs">O(1)</Badge>
-              </div>
-              <p className="text-sm md:text-base leading-relaxed">
-                <strong className="text-purple-600">맨 위</strong>에 있는 값을 꺼내요!
-              </p>
-              <div className="bg-purple-50 p-3 rounded-lg text-xs md:text-sm">
-                <code className="text-purple-700">stack.pop()</code>
-                <p className="text-muted-foreground mt-1">→ 맨 위 요소 제거 & 반환</p>
-              </div>
-            </div>
-
-            {/* Peek */}
-            <div className="bg-white/70 p-4 md:p-5 rounded-xl space-y-3">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-3xl md:text-4xl">👀</span>
-                  <h4 className="font-bold text-lg md:text-xl">Peek</h4>
-                </div>
-                <Badge variant="default" className="text-xs">O(1)</Badge>
-              </div>
-              <p className="text-sm md:text-base leading-relaxed">
-                맨 위 값을 <strong className="text-purple-600">살짝 확인</strong>해요!
-              </p>
-              <div className="bg-purple-50 p-3 rounded-lg text-xs md:text-sm">
-                <code className="text-purple-700">stack.peek()</code>
-                <p className="text-muted-foreground mt-1">→ 맨 위 요소만 확인 (제거 X)</p>
-              </div>
-            </div>
-          </div>
-
-          {/* 왜 빠를까? */}
-          <div className="mt-6 bg-gradient-to-r from-green-100 to-emerald-100 p-4 md:p-5 rounded-xl border-2 border-green-300">
-            <h4 className="font-bold mb-2 flex items-center gap-2 text-base md:text-lg">
-              <span>💡</span>
-              왜 이렇게 빠를까요?
-            </h4>
-            <p className="text-sm md:text-base leading-relaxed">
-              항상 <strong className="text-green-700">맨 위</strong>에서만 작업하니까
-              다른 곳을 찾아다닐 필요가 없어요!
-              그래서 몇 개가 쌓여있든 <strong className="text-green-700">시간이 똑같아요</strong>! 🚀
-            </p>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Step 4: 실생활 활용 */}
-      <Card className="border-2 border-cyan-200 bg-gradient-to-br from-cyan-50 via-blue-50 to-indigo-50 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-40 h-40 bg-blue-300/20 rounded-full blur-3xl" />
-        <CardHeader className="relative">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-3xl">🌍</span>
-            <CardTitle className="text-xl md:text-2xl">4. 어디에 쓰일까요?</CardTitle>
-          </div>
-          <CardDescription className="text-sm md:text-base">
-            우리 주변에서 스택을 만나보세요
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="relative">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="bg-white/70 p-4 md:p-5 rounded-xl space-y-3">
-              <div className="flex items-start gap-3">
-                <span className="text-3xl md:text-4xl">🔙</span>
-                <div className="flex-1">
-                  <h4 className="font-bold text-base md:text-lg mb-1">웹 브라우저 뒤로가기</h4>
-                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                    방금 본 페이지부터 차례대로 돌아가죠!
-                    페이지를 방문할 때마다 스택에 Push하고,
-                    뒤로가기 버튼을 누르면 Pop해요.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white/70 p-4 md:p-5 rounded-xl space-y-3">
-              <div className="flex items-start gap-3">
-                <span className="text-3xl md:text-4xl">↩️</span>
-                <div className="flex-1">
-                  <h4 className="font-bold text-base md:text-lg mb-1">실행 취소 (Ctrl+Z)</h4>
-                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                    가장 최근 작업부터 취소해요.
-                    작업할 때마다 스택에 쌓이고,
-                    Ctrl+Z를 누르면 하나씩 꺼내서 취소!
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white/70 p-4 md:p-5 rounded-xl space-y-3">
-              <div className="flex items-start gap-3">
-                <span className="text-3xl md:text-4xl">📚</span>
-                <div className="flex-1">
-                  <h4 className="font-bold text-base md:text-lg mb-1">함수 호출 스택</h4>
-                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                    프로그램에서 함수를 호출할 때 사용해요.
-                    함수 A가 B를 호출하면, B가 끝나야 A로 돌아가죠!
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white/70 p-4 md:p-5 rounded-xl space-y-3">
-              <div className="flex items-start gap-3">
-                <span className="text-3xl md:text-4xl">✅</span>
-                <div className="flex-1">
-                  <h4 className="font-bold text-base md:text-lg mb-1">괄호 검사</h4>
-                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                    코드에서 ( ) { } [ ] 가 제대로 닫혔는지 확인!
-                    여는 괄호는 Push, 닫는 괄호는 Pop으로 검사해요.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Step 5: 일상 속 스택 */}
-      <div>
-        <div className="text-center mb-6">
-          <h2 className="text-2xl md:text-3xl font-bold mb-2 flex items-center justify-center gap-2">
-            <span>💭</span>
-            5. 일상에서 찾아보는 스택
-          </h2>
-          <p className="text-sm md:text-base text-muted-foreground">
-            우리 주변에 숨어있는 스택의 원리를 발견해보세요!
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-4 md:gap-6">
-          <Card className="bg-gradient-to-br from-pink-50 to-purple-50 border-2 border-pink-200 hover:shadow-lg transition-shadow">
-            <CardContent className="p-5 md:p-6 text-center space-y-3">
-              <span className="text-5xl md:text-6xl mb-2 block">🎂</span>
-              <h4 className="font-bold text-lg md:text-xl">팬케이크 쌓기</h4>
-              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                팬케이크를 만들 때마다 위에 쌓고,
-                먹을 때는 맨 위부터!
-                완벽한 스택 구조예요 🥞
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 hover:shadow-lg transition-shadow">
-            <CardContent className="p-5 md:p-6 text-center space-y-3">
-              <span className="text-5xl md:text-6xl mb-2 block">📱</span>
-              <h4 className="font-bold text-lg md:text-xl">앱 전환 화면</h4>
-              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                스마트폰에서 최근 사용한 앱이
-                제일 위에 나오는 것도
-                스택의 원리를 사용해요!
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-purple-50 to-indigo-50 border-2 border-purple-200 hover:shadow-lg transition-shadow">
-            <CardContent className="p-5 md:p-6 text-center space-y-3">
-              <span className="text-5xl md:text-6xl mb-2 block">🃏</span>
-              <h4 className="font-bold text-lg md:text-xl">카드 게임</h4>
-              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                카드를 쌓아두고
-                맨 위부터 한 장씩 가져가는 것,
-                전형적인 스택이에요!
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-      </div>
+      </section>
     </div>
   );
 }
