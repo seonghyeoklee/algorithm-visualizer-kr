@@ -45,7 +45,7 @@ export default function RootLayout({
             </div>
 
             <TopNavigation />
-            <main className="relative">
+            <main className="relative pt-20">
               {children}
             </main>
           </div>
