@@ -98,20 +98,92 @@ export default function StackPage() {
   const { items, maxSize, lastAction, size, isEmpty } = useStackStore();
 
   return (
-    <div className="container max-w-7xl py-4 md:py-8 px-4 md:px-6 space-y-4 md:space-y-6">
+    <div className="container max-w-7xl py-4 md:py-8 px-4 md:px-6 space-y-6 md:space-y-8">
       {/* Header */}
-      <div>
-        <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-2">
-          <h1 className="text-2xl md:text-3xl font-bold">스택 (Stack)</h1>
-          <Badge variant="secondary" className="text-xs md:text-sm">LIFO</Badge>
+      <div className="text-center space-y-3">
+        <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3">
+          <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
+            스택 (Stack)
+          </h1>
+          <Badge className="bg-gradient-to-r from-indigo-400 to-blue-400 text-white border-0 text-xs md:text-sm px-3 py-1">
+            LIFO
+          </Badge>
         </div>
-        <p className="text-sm md:text-base text-muted-foreground">
-          Last In First Out 원리로 동작하는 선형 자료구조를 시각화합니다.
+        <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
+          접시 쌓기처럼 쉽고 재미있는 자료구조! 마지막에 넣은 게 제일 먼저 나와요 🎯
         </p>
       </div>
 
-      {/* Information Panel */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+      {/* Step 1: 스택이란? */}
+      <Card className="border-2 border-indigo-200 bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-300/20 rounded-full blur-3xl" />
+        <CardHeader className="relative">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-3xl">📚</span>
+            <CardTitle className="text-xl md:text-2xl">1. 스택이 뭔가요?</CardTitle>
+          </div>
+          <CardDescription className="text-sm md:text-base">
+            일상 생활에서 자주 보는 그것!
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="relative">
+          <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+            <div className="bg-white/70 p-4 md:p-6 rounded-xl space-y-3">
+              <h4 className="font-bold text-lg md:text-xl flex items-center gap-2">
+                🍽️ 접시 쌓기
+              </h4>
+              <p className="text-sm md:text-base leading-relaxed">
+                식당에서 접시를 쌓을 때를 생각해보세요!
+                새 접시는 항상 <strong className="text-indigo-600">맨 위에</strong> 올리고,
+                사용할 때도 <strong className="text-indigo-600">맨 위</strong>부터 빼잖아요?
+                <br/><br/>
+                이게 바로 <strong className="text-purple-600">스택(Stack)</strong>이에요! 🎉
+              </p>
+            </div>
+
+            <div className="bg-white/70 p-4 md:p-6 rounded-xl space-y-3">
+              <div className="flex items-center gap-2 mb-2">
+                <Badge className="bg-gradient-to-r from-pink-400 to-purple-400 text-white border-0">
+                  LIFO
+                </Badge>
+                <h4 className="font-bold text-lg md:text-xl">
+                  마지막이 첫 번째!
+                </h4>
+              </div>
+              <p className="text-sm md:text-base leading-relaxed">
+                <strong className="text-purple-600">Last In, First Out</strong>의 약자예요.
+                <br/>
+                가장 나중에 들어온 것이 가장 먼저 나간다는 뜻이에요!
+              </p>
+              <div className="flex items-center gap-2 flex-wrap mt-4 p-3 bg-indigo-50 rounded-lg">
+                <Badge variant="outline" className="text-sm">3️⃣ 마지막 입장</Badge>
+                <span>→</span>
+                <Badge variant="outline" className="text-sm">2️⃣</Badge>
+                <span>→</span>
+                <Badge variant="outline" className="text-sm">1️⃣ 첫 입장</Badge>
+              </div>
+              <p className="text-xs md:text-sm text-muted-foreground text-center mt-2">
+                나갈 때는 3️⃣ → 2️⃣ → 1️⃣ 순서로!
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Step 2: 직접 해보기 */}
+      <div className="space-y-4">
+        <div className="text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 flex items-center justify-center gap-2">
+            <span>🎮</span>
+            2. 직접 해볼까요?
+          </h2>
+          <p className="text-sm md:text-base text-muted-foreground">
+            아래 컨트롤로 스택을 조작하며 LIFO 원리를 체험해보세요!
+          </p>
+        </div>
+
+        {/* 현재 상태 정보 */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         <Card className="relative overflow-hidden border-2 border-indigo-200/50 bg-gradient-to-br from-indigo-50 via-white to-blue-50">
           <div className="absolute top-0 right-0 w-20 h-20 bg-indigo-200/30 rounded-full blur-2xl" />
           <CardHeader className="pb-2 md:pb-3 relative">
@@ -198,8 +270,8 @@ export default function StackPage() {
         </Card>
       </div>
 
-      {/* Main Visualization Area */}
-      <div className="grid lg:grid-cols-3 gap-4 md:gap-6">
+        {/* 시각화 영역 */}
+        <div className="grid lg:grid-cols-3 gap-4 md:gap-6">
         {/* Visualizer Section */}
         <div className="lg:col-span-2 space-y-3 md:space-y-4">
           <Card className="shadow-md">
@@ -230,176 +302,218 @@ export default function StackPage() {
           )}
         </div>
 
-        {/* Controls Section */}
-        <div className="lg:col-span-1">
-          <StackControls />
+          {/* Controls Section */}
+          <div className="lg:col-span-1">
+            <StackControls />
+          </div>
         </div>
       </div>
 
-      {/* Fun Educational Content */}
-      <div className="grid lg:grid-cols-2 gap-4 md:gap-6">
-        <Card className="border-2 border-indigo-200 bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-300/20 rounded-full blur-3xl" />
-          <CardHeader className="relative">
-            <CardTitle className="flex items-center gap-2 text-xl">
-              🎯 스택이 뭐예요?
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="bg-white/70 p-4 rounded-xl">
-              <h4 className="font-bold mb-2 text-lg">🍽️ 접시 쌓기를 상상해보세요!</h4>
-              <p className="text-sm leading-relaxed">
-                식당에서 접시를 쌓을 때를 떠올려보세요.
-                새 접시는 항상 <strong className="text-pink-600">맨 위에</strong> 올리고,
-                사용할 때도 <strong className="text-pink-600">맨 위</strong>부터 빼잖아요?
-                이게 바로 스택이에요! 🎉
-              </p>
-            </div>
-
-            <div className="bg-white/70 p-4 rounded-xl">
-              <h4 className="font-bold mb-3 text-lg flex items-center gap-2">
-                <Badge className="bg-gradient-to-r from-pink-400 to-purple-400">LIFO</Badge>
-                마지막이 첫 번째!
-              </h4>
-              <p className="text-sm leading-relaxed mb-3">
-                Last In, First Out의 약자예요.
-                <strong className="text-purple-600">가장 나중에 들어온 게 가장 먼저 나가요</strong>!
-              </p>
-              <div className="flex gap-2 flex-wrap">
-                <Badge variant="outline">3️⃣ 마지막 입장</Badge>
-                <span>→</span>
-                <Badge variant="outline">2️⃣</Badge>
-                <span>→</span>
-                <Badge variant="outline">1️⃣ 첫 입장</Badge>
-              </div>
-              <p className="text-xs text-muted-foreground mt-2">
-                나갈 때는 3️⃣ → 2️⃣ → 1️⃣ 순서로!
-              </p>
-            </div>
-
-            <div className="bg-white/70 p-4 rounded-xl">
-              <h4 className="font-bold mb-2 text-lg">🎮 어디서 쓰일까요?</h4>
-              <div className="space-y-2 text-sm">
-                <div className="flex items-start gap-2">
-                  <span>🔙</span>
-                  <div>
-                    <strong>뒤로가기 버튼</strong>
-                    <p className="text-muted-foreground text-xs">
-                      방금 본 페이지부터 차례대로 돌아가죠!
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span>↩️</span>
-                  <div>
-                    <strong>실행 취소 (Ctrl+Z)</strong>
-                    <p className="text-muted-foreground text-xs">
-                      가장 최근 작업부터 취소해요
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span>📚</span>
-                  <div>
-                    <strong>함수 호출</strong>
-                    <p className="text-muted-foreground text-xs">
-                      프로그램이 함수를 호출할 때 사용해요
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-2 border-purple-200 bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 relative overflow-hidden">
-          <div className="absolute bottom-0 left-0 w-32 h-32 bg-purple-300/20 rounded-full blur-3xl" />
-          <CardHeader className="relative">
-            <CardTitle className="flex items-center gap-2 text-xl">
-              ⚡ 뭘 할 수 있나요?
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="bg-white/70 p-4 rounded-xl">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="text-3xl">📥</span>
-                <h4 className="font-bold text-lg">Push (넣기)</h4>
-              </div>
-              <p className="text-sm leading-relaxed">
-                새로운 값을 <strong className="text-purple-600">맨 위에 쏙</strong> 넣어요!
-                아주 빨라요 → <Badge variant="default">순식간 O(1)</Badge>
-              </p>
-            </div>
-
-            <div className="bg-white/70 p-4 rounded-xl">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="text-3xl">📤</span>
-                <h4 className="font-bold text-lg">Pop (빼기)</h4>
-              </div>
-              <p className="text-sm leading-relaxed">
-                <strong className="text-purple-600">맨 위</strong>에 있는 값을 빼내요!
-                이것도 빨라요 → <Badge variant="default">순식간 O(1)</Badge>
-              </p>
-            </div>
-
-            <div className="bg-white/70 p-4 rounded-xl">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="text-3xl">👀</span>
-                <h4 className="font-bold text-lg">Peek (슬쩍 보기)</h4>
-              </div>
-              <p className="text-sm leading-relaxed">
-                맨 위에 뭐가 있는지만 <strong className="text-purple-600">살짝 확인</strong>해요!
-                빼지는 않아요 → <Badge variant="default">순식간 O(1)</Badge>
-              </p>
-            </div>
-
-            <div className="bg-gradient-to-r from-green-100 to-emerald-100 p-4 rounded-xl border-2 border-green-300">
-              <h4 className="font-bold mb-2 flex items-center gap-2">
-                <span>💡</span>
-                왜 이렇게 빠를까요?
-              </h4>
-              <p className="text-sm leading-relaxed">
-                항상 <strong className="text-green-700">맨 위</strong>에서만 작업하니까
-                다른 곳을 찾아다닐 필요가 없어요!
-                그래서 몇 개가 쌓여있든 시간이 똑같아요! 🚀
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Fun Tips */}
-      <Card className="border-2 border-cyan-200 bg-gradient-to-r from-cyan-50 via-blue-50 to-indigo-50 relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 w-40 h-40 bg-blue-300/20 rounded-full blur-3xl" />
+      {/* Step 3: 주요 연산 */}
+      <Card className="border-2 border-purple-200 bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 relative overflow-hidden">
+        <div className="absolute bottom-0 left-0 w-40 h-40 bg-purple-300/20 rounded-full blur-3xl" />
         <CardHeader className="relative">
-          <CardTitle className="flex items-center gap-2 text-xl">
-            💭 재미있는 팁!
-          </CardTitle>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-3xl">⚡</span>
+            <CardTitle className="text-xl md:text-2xl">3. 스택으로 뭘 할 수 있나요?</CardTitle>
+          </div>
+          <CardDescription className="text-sm md:text-base">
+            스택의 3가지 핵심 연산을 알아봐요
+          </CardDescription>
         </CardHeader>
-        <CardContent className="grid md:grid-cols-3 gap-4">
-          <div className="bg-white/70 p-4 rounded-xl text-center">
-            <span className="text-4xl mb-2 block">🎂</span>
-            <h4 className="font-bold mb-1">팬케이크 쌓기</h4>
-            <p className="text-sm text-muted-foreground">
-              팬케이크도 맨 위부터 먹잖아요!
-            </p>
+        <CardContent className="relative">
+          <div className="grid md:grid-cols-3 gap-4">
+            {/* Push */}
+            <div className="bg-white/70 p-4 md:p-5 rounded-xl space-y-3">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-3xl md:text-4xl">📥</span>
+                  <h4 className="font-bold text-lg md:text-xl">Push</h4>
+                </div>
+                <Badge variant="default" className="text-xs">O(1)</Badge>
+              </div>
+              <p className="text-sm md:text-base leading-relaxed">
+                새로운 값을 <strong className="text-purple-600">맨 위에 쏙</strong> 넣어요!
+              </p>
+              <div className="bg-purple-50 p-3 rounded-lg text-xs md:text-sm">
+                <code className="text-purple-700">stack.push(10)</code>
+                <p className="text-muted-foreground mt-1">→ 10을 스택 맨 위에 추가</p>
+              </div>
+            </div>
+
+            {/* Pop */}
+            <div className="bg-white/70 p-4 md:p-5 rounded-xl space-y-3">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-3xl md:text-4xl">📤</span>
+                  <h4 className="font-bold text-lg md:text-xl">Pop</h4>
+                </div>
+                <Badge variant="default" className="text-xs">O(1)</Badge>
+              </div>
+              <p className="text-sm md:text-base leading-relaxed">
+                <strong className="text-purple-600">맨 위</strong>에 있는 값을 꺼내요!
+              </p>
+              <div className="bg-purple-50 p-3 rounded-lg text-xs md:text-sm">
+                <code className="text-purple-700">stack.pop()</code>
+                <p className="text-muted-foreground mt-1">→ 맨 위 요소 제거 & 반환</p>
+              </div>
+            </div>
+
+            {/* Peek */}
+            <div className="bg-white/70 p-4 md:p-5 rounded-xl space-y-3">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-3xl md:text-4xl">👀</span>
+                  <h4 className="font-bold text-lg md:text-xl">Peek</h4>
+                </div>
+                <Badge variant="default" className="text-xs">O(1)</Badge>
+              </div>
+              <p className="text-sm md:text-base leading-relaxed">
+                맨 위 값을 <strong className="text-purple-600">살짝 확인</strong>해요!
+              </p>
+              <div className="bg-purple-50 p-3 rounded-lg text-xs md:text-sm">
+                <code className="text-purple-700">stack.peek()</code>
+                <p className="text-muted-foreground mt-1">→ 맨 위 요소만 확인 (제거 X)</p>
+              </div>
+            </div>
           </div>
-          <div className="bg-white/70 p-4 rounded-xl text-center">
-            <span className="text-4xl mb-2 block">📱</span>
-            <h4 className="font-bold mb-1">앱 전환</h4>
-            <p className="text-sm text-muted-foreground">
-              최근 앱부터 보여주는 것도 스택!
-            </p>
-          </div>
-          <div className="bg-white/70 p-4 rounded-xl text-center">
-            <span className="text-4xl mb-2 block">🃏</span>
-            <h4 className="font-bold mb-1">카드 덱</h4>
-            <p className="text-sm text-muted-foreground">
-              카드 맨 위부터 한 장씩!
+
+          {/* 왜 빠를까? */}
+          <div className="mt-6 bg-gradient-to-r from-green-100 to-emerald-100 p-4 md:p-5 rounded-xl border-2 border-green-300">
+            <h4 className="font-bold mb-2 flex items-center gap-2 text-base md:text-lg">
+              <span>💡</span>
+              왜 이렇게 빠를까요?
+            </h4>
+            <p className="text-sm md:text-base leading-relaxed">
+              항상 <strong className="text-green-700">맨 위</strong>에서만 작업하니까
+              다른 곳을 찾아다닐 필요가 없어요!
+              그래서 몇 개가 쌓여있든 <strong className="text-green-700">시간이 똑같아요</strong>! 🚀
             </p>
           </div>
         </CardContent>
       </Card>
+
+      {/* Step 4: 실생활 활용 */}
+      <Card className="border-2 border-cyan-200 bg-gradient-to-br from-cyan-50 via-blue-50 to-indigo-50 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-40 h-40 bg-blue-300/20 rounded-full blur-3xl" />
+        <CardHeader className="relative">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-3xl">🌍</span>
+            <CardTitle className="text-xl md:text-2xl">4. 어디에 쓰일까요?</CardTitle>
+          </div>
+          <CardDescription className="text-sm md:text-base">
+            우리 주변에서 스택을 만나보세요
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="relative">
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="bg-white/70 p-4 md:p-5 rounded-xl space-y-3">
+              <div className="flex items-start gap-3">
+                <span className="text-3xl md:text-4xl">🔙</span>
+                <div className="flex-1">
+                  <h4 className="font-bold text-base md:text-lg mb-1">웹 브라우저 뒤로가기</h4>
+                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                    방금 본 페이지부터 차례대로 돌아가죠!
+                    페이지를 방문할 때마다 스택에 Push하고,
+                    뒤로가기 버튼을 누르면 Pop해요.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white/70 p-4 md:p-5 rounded-xl space-y-3">
+              <div className="flex items-start gap-3">
+                <span className="text-3xl md:text-4xl">↩️</span>
+                <div className="flex-1">
+                  <h4 className="font-bold text-base md:text-lg mb-1">실행 취소 (Ctrl+Z)</h4>
+                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                    가장 최근 작업부터 취소해요.
+                    작업할 때마다 스택에 쌓이고,
+                    Ctrl+Z를 누르면 하나씩 꺼내서 취소!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white/70 p-4 md:p-5 rounded-xl space-y-3">
+              <div className="flex items-start gap-3">
+                <span className="text-3xl md:text-4xl">📚</span>
+                <div className="flex-1">
+                  <h4 className="font-bold text-base md:text-lg mb-1">함수 호출 스택</h4>
+                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                    프로그램에서 함수를 호출할 때 사용해요.
+                    함수 A가 B를 호출하면, B가 끝나야 A로 돌아가죠!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white/70 p-4 md:p-5 rounded-xl space-y-3">
+              <div className="flex items-start gap-3">
+                <span className="text-3xl md:text-4xl">✅</span>
+                <div className="flex-1">
+                  <h4 className="font-bold text-base md:text-lg mb-1">괄호 검사</h4>
+                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                    코드에서 ( ) { } [ ] 가 제대로 닫혔는지 확인!
+                    여는 괄호는 Push, 닫는 괄호는 Pop으로 검사해요.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Step 5: 일상 속 스택 */}
+      <div>
+        <div className="text-center mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 flex items-center justify-center gap-2">
+            <span>💭</span>
+            5. 일상에서 찾아보는 스택
+          </h2>
+          <p className="text-sm md:text-base text-muted-foreground">
+            우리 주변에 숨어있는 스택의 원리를 발견해보세요!
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-4 md:gap-6">
+          <Card className="bg-gradient-to-br from-pink-50 to-purple-50 border-2 border-pink-200 hover:shadow-lg transition-shadow">
+            <CardContent className="p-5 md:p-6 text-center space-y-3">
+              <span className="text-5xl md:text-6xl mb-2 block">🎂</span>
+              <h4 className="font-bold text-lg md:text-xl">팬케이크 쌓기</h4>
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                팬케이크를 만들 때마다 위에 쌓고,
+                먹을 때는 맨 위부터!
+                완벽한 스택 구조예요 🥞
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 hover:shadow-lg transition-shadow">
+            <CardContent className="p-5 md:p-6 text-center space-y-3">
+              <span className="text-5xl md:text-6xl mb-2 block">📱</span>
+              <h4 className="font-bold text-lg md:text-xl">앱 전환 화면</h4>
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                스마트폰에서 최근 사용한 앱이
+                제일 위에 나오는 것도
+                스택의 원리를 사용해요!
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-purple-50 to-indigo-50 border-2 border-purple-200 hover:shadow-lg transition-shadow">
+            <CardContent className="p-5 md:p-6 text-center space-y-3">
+              <span className="text-5xl md:text-6xl mb-2 block">🃏</span>
+              <h4 className="font-bold text-lg md:text-xl">카드 게임</h4>
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                카드를 쌓아두고
+                맨 위부터 한 장씩 가져가는 것,
+                전형적인 스택이에요!
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </div>
   );
 }
