@@ -82,7 +82,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="container max-w-6xl mx-auto py-8 md:py-12 px-4 md:px-8">
+    <div className="max-w-6xl mx-auto py-8 md:py-12 px-4 md:px-8">
       {/* Hero Section */}
       <div className="mb-12 md:mb-16 text-center space-y-4">
         <Badge variant="secondary" className="mb-2 text-xs md:text-sm">
