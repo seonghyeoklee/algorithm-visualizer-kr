@@ -82,23 +82,23 @@ export default function Home() {
   ];
 
   return (
-    <div className="container max-w-screen-2xl py-8 md:py-12 px-4 md:px-8">
+    <div className="container max-w-6xl mx-auto py-8 md:py-12 px-4 md:px-8">
       {/* Hero Section */}
-      <div className="mb-12 text-center space-y-4">
-        <Badge variant="secondary" className="mb-2">
+      <div className="mb-12 md:mb-16 text-center space-y-4">
+        <Badge variant="secondary" className="mb-2 text-xs md:text-sm">
           🧪 Data Structure Laboratory
         </Badge>
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
           실험하고, 시각화하고, 배우세요
         </h1>
-        <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
+        <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
           자료구조를 인터랙티브하게 실험하고 학습하는 전문 플랫폼.
           각 자료구조의 동작 원리를 직접 조작하며 깊이 이해할 수 있습니다.
         </p>
       </div>
 
       {/* Dashboard Stats */}
-      <div className="grid gap-4 md:grid-cols-3 mb-12">
+      <div className="max-w-4xl mx-auto grid gap-4 md:grid-cols-3 mb-12 md:mb-16">
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (
@@ -125,16 +125,14 @@ export default function Home() {
 
       {/* Experiment Modules Grid */}
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold">실험 모듈</h2>
-            <p className="text-muted-foreground mt-1">
-              자료구조를 선택하고 실험을 시작하세요
-            </p>
-          </div>
+        <div className="text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2">실험 모듈</h2>
+          <p className="text-sm md:text-base text-muted-foreground">
+            자료구조를 선택하고 실험을 시작하세요
+          </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="max-w-5xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {experiments.map((experiment) => {
             const Icon = experiment.icon;
             const isAvailable = experiment.status === "available";
@@ -154,15 +152,15 @@ export default function Home() {
                     ? "hover:shadow-xl hover:scale-[1.02] hover:border-primary cursor-pointer"
                     : "opacity-60"
                 )}>
-                  <CardHeader>
-                    <div className="flex items-start justify-between mb-2">
+                  <CardHeader className="space-y-3">
+                    <div className="flex items-start justify-between">
                       <div className={cn(
-                        "p-3 rounded-xl bg-gradient-to-br",
+                        "p-2 rounded-lg bg-gradient-to-br",
                         isAvailable
                           ? "from-indigo-500 to-blue-500"
                           : "from-gray-400 to-gray-500"
                       )}>
-                        <Icon className="w-6 h-6 text-white" />
+                        <Icon className="w-5 h-5 text-white" />
                       </div>
                       {!isAvailable && (
                         <Badge variant="outline" className="text-xs">
@@ -170,15 +168,17 @@ export default function Home() {
                         </Badge>
                       )}
                     </div>
-                    <CardTitle className="flex items-center justify-between">
-                      <span>{experiment.titleKo}</span>
-                      {isAvailable && (
-                        <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                      )}
-                    </CardTitle>
-                    <CardDescription className="text-xs text-muted-foreground">
-                      {experiment.title}
-                    </CardDescription>
+                    <div>
+                      <CardTitle className="flex items-center justify-between text-lg">
+                        <span>{experiment.titleKo}</span>
+                        {isAvailable && (
+                          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                        )}
+                      </CardTitle>
+                      <CardDescription className="text-xs text-muted-foreground mt-1">
+                        {experiment.title}
+                      </CardDescription>
+                    </div>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <p className="text-sm text-muted-foreground leading-relaxed">
@@ -214,9 +214,9 @@ export default function Home() {
       </div>
 
       {/* CTA Section */}
-      <div className="mt-16 text-center space-y-4">
-        <h3 className="text-2xl font-bold">더 많은 실험 모듈 준비 중</h3>
-        <p className="text-muted-foreground">
+      <div className="mt-16 md:mt-20 text-center space-y-3">
+        <h3 className="text-xl md:text-2xl font-bold">더 많은 실험 모듈 준비 중</h3>
+        <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto">
           트리, 그래프, 해시 테이블 등 다양한 자료구조가 곧 추가됩니다.
         </p>
       </div>
