@@ -32,7 +32,8 @@ export default function RootLayout({
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
-          enableSystem
+          forcedTheme="light"
+          enableSystem={false}
           disableTransitionOnChange
         >
           <div className="relative min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50">

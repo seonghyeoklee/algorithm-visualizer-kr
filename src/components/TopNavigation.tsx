@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { Home, Beaker } from "lucide-react";
 
 export function TopNavigation() {
@@ -49,10 +48,8 @@ export function TopNavigation() {
           </Link>
         </nav>
 
-        {/* Theme Toggle */}
-        <div className="flex items-center gap-4">
-          <ThemeToggle />
-        </div>
+        {/* Empty space for visual balance */}
+        <div className="w-10"></div>
       </div>
     </header>
   );
