@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Sidebar } from "@/components/Sidebar";
+import { TopNavigation } from "@/components/TopNavigation";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 const geistSans = Geist({
@@ -35,16 +35,16 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex h-screen overflow-hidden bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50">
+          <div className="relative min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50">
             {/* Decorative background patterns */}
-            <div className="fixed inset-0 opacity-25 pointer-events-none">
+            <div className="fixed inset-0 opacity-20 pointer-events-none">
               <div className="absolute top-0 left-0 w-96 h-96 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl animate-pulse" />
               <div className="absolute top-0 right-0 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
               <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl animate-pulse" style={{ animationDelay: "2s" }} />
             </div>
 
-            <Sidebar />
-            <main className="flex-1 overflow-y-auto relative pt-16 md:pt-0">
+            <TopNavigation />
+            <main className="relative">
               {children}
             </main>
           </div>

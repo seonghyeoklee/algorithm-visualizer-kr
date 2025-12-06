@@ -1,11 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { StackVisualizer } from "@/components/visualizers/StackVisualizer";
 import { StackControls } from "@/components/controls/StackControls";
 import { CodePanel } from "@/components/CodePanel";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useStackStore } from "@/lib/stores/stackStore";
 import { Badge } from "@/components/ui/badge";
+import { ChevronRight, Home } from "lucide-react";
 
 const javascriptCode = `class Stack {
   constructor() {
@@ -99,6 +101,16 @@ export default function StackPage() {
 
   return (
     <div className="container max-w-7xl py-4 md:py-8 px-4 md:px-6 space-y-6 md:space-y-8">
+      {/* Breadcrumb */}
+      <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
+        <Link href="/" className="flex items-center gap-1 hover:text-foreground transition-colors">
+          <Home className="w-4 h-4" />
+          <span>Home</span>
+        </Link>
+        <ChevronRight className="w-4 h-4" />
+        <span className="text-foreground font-medium">Stack</span>
+      </nav>
+
       {/* Header */}
       <div className="text-center space-y-3">
         <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3">
