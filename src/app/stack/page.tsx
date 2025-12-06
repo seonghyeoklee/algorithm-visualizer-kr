@@ -100,8 +100,8 @@ export default function StackPage() {
   const { items, maxSize, lastAction, size, isEmpty } = useStackStore();
 
   return (
-    <div className="w-full flex justify-center px-4 md:px-6 py-4 md:py-8">
-      <div className="w-full max-w-7xl space-y-6 md:space-y-8">
+    <div className="w-full flex justify-center px-4 md:px-8 py-4 md:py-8">
+      <div className="w-full max-w-6xl space-y-6 md:space-y-8">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
         <Link href="/" className="flex items-center gap-1 hover:text-foreground transition-colors">
