@@ -9,14 +9,14 @@ export default function Home() {
       {/* Hero Section */}
       <div className="mb-16 space-y-4">
         <Badge variant="secondary" className="mb-2">
-          Interactive Learning Platform
+          🧪 Data Structure Laboratory
         </Badge>
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-          자료구조를 시각적으로 배우세요
+        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
+          실험하고, 시각화하고, 배우세요
         </h1>
         <p className="text-xl text-muted-foreground max-w-2xl">
-          인터랙티브한 애니메이션으로 자료구조의 동작 원리를 직관적으로 이해하고,
-          직접 조작하며 학습할 수 있습니다.
+          자료구조를 인터랙티브하게 실험하고 학습하는 전문 플랫폼.
+          각 자료구조의 동작 원리를 직접 조작하며 깊이 이해할 수 있습니다.
         </p>
       </div>
 
@@ -161,21 +161,21 @@ export default function Home() {
       {/* Features */}
       <div className="mt-16 grid gap-8 md:grid-cols-3">
         <div className="space-y-2">
-          <h3 className="text-lg font-semibold">🎨 실시간 시각화</h3>
+          <h3 className="text-lg font-semibold">🧪 실시간 실험</h3>
           <p className="text-sm text-muted-foreground">
-            각 연산마다 부드러운 애니메이션으로 동작 과정을 확인할 수 있습니다.
+            각 연산마다 부드러운 애니메이션으로 동작 과정을 실험하고 관찰할 수 있습니다.
           </p>
         </div>
         <div className="space-y-2">
-          <h3 className="text-lg font-semibold">⚡ 인터랙티브</h3>
+          <h3 className="text-lg font-semibold">🔬 인터랙티브 학습</h3>
           <p className="text-sm text-muted-foreground">
             직접 값을 입력하고 조작하며 자료구조의 원리를 체험할 수 있습니다.
           </p>
         </div>
         <div className="space-y-2">
-          <h3 className="text-lg font-semibold">📚 코드 예시</h3>
+          <h3 className="text-lg font-semibold">📚 전문 자료</h3>
           <p className="text-sm text-muted-foreground">
-            실제 코드 구현과 시간 복잡도를 함께 제공합니다.
+            실제 코드 구현, 시간 복잡도, 활용 사례를 함께 제공합니다.
           </p>
         </div>
       </div>

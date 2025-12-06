@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "자료구조 시각화 | Data Structure Visualizer",
-  description: "인터랙티브한 자료구조 시각화 학습 플랫폼",
+  title: "StructLab | Data Structure Laboratory",
+  description: "실험하고, 시각화하고, 배우세요. 자료구조를 인터랙티브하게 학습하는 전문 플랫폼",
 };
 
 export default function RootLayout({

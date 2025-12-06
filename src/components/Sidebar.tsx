@@ -77,13 +77,13 @@ export function Sidebar() {
           <div className="flex items-start justify-between">
             <Link href="/" className="group">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-2xl group-hover:scale-110 transition-transform">🎨</span>
+                <span className="text-2xl group-hover:scale-110 transition-transform">🧪</span>
                 <h1 className="text-xl font-bold tracking-tight bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
-                  자료구조 시각화
+                  StructLab
                 </h1>
               </div>
               <p className="text-sm text-muted-foreground">
-                ✨ Interactive Learning
+                🔬 Experiment. Visualize. Learn.
               </p>
             </Link>
             <ThemeToggle />
